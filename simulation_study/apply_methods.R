@@ -4,10 +4,9 @@
 # What happens here? ------------------------------------------------------------#
 # Script 1: 
 # Established and new methods are applied to detect the number of modes in 
-# 172 simulated distributions of ordinal data. 
-# NOTE: some simulations are highly computationally expensive 
+# 172 simulated samples of ordinal data. 
+# NOTE: some simulations are computationally expensive 
 #--------------------------------------------------------------------------------#
-
 
 # LOAD ALL FUNCTIONS AND SIMULATED DISTRIBUTIONS ---------------------------------#
 
@@ -15,16 +14,19 @@ library(parSim)
 library(dplyr)
 library(stringr)
 
-# load remode package
-# A) either run devtools::install_github("hvdmaas/remode")
+# install remode package
+# A) either run 
+#    Sys.setenv(GITHUB_PAT = "YOUR_TOKEN") # insert PAT token 
+#    devtools::install_github("hvdmaas/remode", auth_token = Sys.getenv("GITHUB_PAT"))
 # B) or download R project here: https://github.com/hvdmaas/remode
 #    open R project and run devtools::load_all()
+library(remode)
 
 # load functions for established modality detection methods 
-source("simulation_study/source_alternative_functions.R")
+source("simulation_study/src/source_alternative_functions.R")
 
 # load benchmark distribution 
-load("simulation_study/benchmark_distributions.RData")
+benchmark_distributions <- readRDS("simulation_study/benchmark_distributions.RData")
 
 
 # APPLY FUNCTIONS TO BENCHMARK DISTRIBUTIONS -------------------------------------#
@@ -41,14 +43,13 @@ overview_benchmark <- data.frame(  # store info on distributions
   true_modes = true_modes
 )
 
-
 # Apply silvermans method --------------------------------------#
 test_silverman <- function(i, benchmark){
   silverman_it(as.numeric(benchmark[[i]]))
 }
 
 parSim(
-  i = 67:68, # index of benchmark distribution
+  i = 1:length(benchmark_distributions), 
   reps = 1, 
   write = T, 
   export = c("silverman.test","silverman_it",
@@ -60,9 +61,11 @@ parSim(
   }
 )
 
-silverman_df <- read.table("silverman_results.txt", 
+silverman_df <- read.table("benchmark_silverman.txt", 
                            header = TRUE)
-silverman_df <- left_join(silverman_df, overview_benchmark, by="i") %>%
+silverman_df <- left_join(silverman_df, 
+                          overview_benchmark,
+                          by="i") %>%
   select(i, name, n, c, true_modes, df) %>%
   rename(modality_est = df) %>%
   mutate(multimod = modality_est > 1, 
@@ -79,7 +82,7 @@ test_dip <- function(i, benchmark){
 }
 
 parSim(
-  i = 1:172, # index of benchmark distribution
+  i = 1:length(benchmark_distributions), # index of benchmark distribution
   reps = 1,
   write = T, 
   export = c("dip.test","benchmark_distributions","test_dip"),
@@ -108,7 +111,7 @@ test_ACR <- function(i, benchmark){
 }
 
 parSim(
-  i = 67:80, # index of benchmark distribution
+  i = 1:length(benchmark_distributions), # index of benchmark distribution
   reps = 1,
   write = T, 
   export = c("test_ACR","benchmark_distributions","modetest"),
@@ -136,7 +139,7 @@ test_GMM <- function(i, benchmark){
 }
 
 parSim(
-  i = 1:172, # index of benchmark distribution
+  i = 1:length(benchmark_distributions), # index of benchmark distribution
   reps = 1, 
   write = T, 
   export = c("mclustBIC","benchmark_distributions","test_GMM","str_split"),
@@ -162,7 +165,7 @@ test_BC <- function(i, benchmark){
 }
 
 parSim(
-  i = 1:172, # index of benchmark distribution
+  i = 1:length(benchmark_distributions), # index of benchmark distribution
   reps = 1, 
   write = T, 
   export = c("bimodality_coefficient","benchmark_distributions","test_BC"),
@@ -190,7 +193,7 @@ test_densMM <- function(i, benchmark){ # treating claw as contiuous
 }
 
 parSim(
-  i = 1:172, # index of benchmark distribution
+  i = 1:length(benchmark_distributions), # index of benchmark distribution
   reps = 1, 
   write = T, 
   export = c("DensMMdet","benchmark_distributions","test_densMM"),
@@ -219,7 +222,7 @@ test_dfu <- function(i, benchmark){
 }
 
 parSim(
-  i = 1:172, # index of benchmark distribution
+  i = 1:length(benchmark_distributions), # index of benchmark distribution
   reps = 1, 
   write = T, 
   export = c("dfu","benchmark_distributions","test_dfu"),
@@ -247,7 +250,7 @@ test_Remode <- function(i, benchmark){
 }
 
 parSim(
-  i = c(1:172), # index of benchmark distribution
+  i = c(1:length(benchmark_distributions)), # index of benchmark distribution
   reps = 1, 
   write = T, 
   export = c("test_Remode","benchmark_distributions","remode","remode_find_maxima", "perform_binomial_test"),

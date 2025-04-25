@@ -47,11 +47,11 @@ for(i in 1:nrow(results_df)){
 }
 results_df$dist_type2 <- ifelse(grepl("Trimodal_Gaussians", results_df$dist_type), "Trimodal Gaussians",
                              ifelse(grepl("Bimodal_Gaussians", results_df$dist_type), "Bimodal Gaussians",
-                                    ifelse(grepl("Bimodal_Special_case", results_df$dist_type), "Bimodal Special Case",
+                                    ifelse(grepl("Bimodal_Special_", results_df$dist_type), "Bimodal Special Case",
                                            ifelse(grepl("Unimodal_Beta", results_df$dist_type), "Unimodal Beta", 
                                                   results_df$dist_type))))
 results_df$dist_type2 <- gsub("_", " ", results_df$dist_type2)
-results_df$dist_type3 <- ifelse((results_df$dist_type2 == "Unimodal Beta" | results_df$dist_type2 == "Unimodal Special case 13"), 
+results_df$dist_type3 <- ifelse((results_df$dist_type2 == "Unimodal Beta" | results_df$dist_type2 == "Unimodal Special Staircase"), 
                              "Unimodal Non-Gaussian", 
                              ifelse((grepl("Bimodal", results_df$dist_type2) & results_df$dist_type2 != "Bimodal Gaussians"), 
                                     "Bimodal Non-Gaussian", 
@@ -148,7 +148,6 @@ df_long <- df_correct %>%
   )
 
 
-# plot (Fig. 4 in paper)
 method_linetypes <- c("DensMM" = "dashed", "Remode" = "solid", "silverman" = "dotted")
 method_colors <- c("DensMM" = "#79C3B8", "Remode" = "#ED6A5A" , "silverman" = "#5CA4A9")
 ggplot(df_long, aes(x = factor(n), y = mean_accuracy, color = method, 
