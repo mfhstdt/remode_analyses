@@ -395,10 +395,22 @@ acc_comparison_df <- Reduce(function(x, y) merge(x, y, by = "name", all = TRUE),
                                  BC_acc_comparison, 
                                  DIP_acc_comparison))
 
-acc_comparison_df <- acc_comparison_df %>%
+# df tracking changes in accuracies for each dist x method combination:
+acc_comparison_df <- acc_comparison_df %>% 
   select(name, starts_with("diff_acc_"))
 
 saveRDS(acc_comparison_df, "simulation_study/test_resampling/accuracy_comparison_df.RData")
 
-write.csv(acc_comparison_df, file = "acc_comparison_df.csv", row.names = FALSE)
+# mean change in accuracy per method over all distributions
+acc_comparison_means <- colMeans(acc_comparison_df[2:9], na.rm=TRUE) 
+
+# get percentage of dists which differ in their acc change
+acc_comparison_perc_change <- sapply(acc_comparison_df[2:9], function(col) {
+  mean(!is.na(col) & col != 0)
+})
+
+# mean change in accuracies in cases where changes occured
+acc_comparison_df[acc_comparison_df == 0] <- NaN
+acc_comparison_means_wia <- colMeans(acc_comparison_df[2:9], na.rm=TRUE) 
+
 
