@@ -58,7 +58,7 @@ silverman_df <- left_join(silverman_df,
   mutate(multimod = modality_est > 1, 
          method = "silverman")
 
-save(silverman_df, file = "simulation_study/test_resampling/results_silverman_resampled.RData")
+save(silverman_df, file = "simulation_study/test_resampling/results/results_silverman_resampled.RData")
 
 
 # Apply dip statistic -----------------------------------------# 
@@ -87,7 +87,7 @@ dip_df <- left_join(dip_df, resampled_results, by = "i") %>%
   mutate(modality_est = NA, 
          method = "dip")
 
-save(dip_df, file = "simulation_study/test_resampling/results_dip_resampled.RData")
+save(dip_df, file = "simulation_study/test_resampling/results/results_dip_resampled.RData")
 
 
 # Ameijeriras-Alonso method for uni- vs. multimodality ------------------------#
@@ -117,7 +117,7 @@ ACR_df <- left_join(ACR_df, resampled_results, by="i") %>%
   mutate(modality_est = NA, 
          method = "ACR multimodality")
 
-save(ACR_df, file = "simulation_study/test_resampling/results_ACR_multimod_resampled.RData")
+save(ACR_df, file = "simulation_study/test_resampling/results/results_ACR_multimod_resampled.RData")
 
 
 # apply Gaussian Mixture Modeling ---------------------#
@@ -146,7 +146,7 @@ GMM_df <- left_join(GMM_df, resampled_results, by="i") %>%
          method = "GMM") %>%
   select(i, name,true_modes, multimod, modality_est, method)
 
-save(GMM_df, file = "simulation_study/test_resampling/results_GMM_resampled.RData")
+save(GMM_df, file = "simulation_study/test_resampling/results/results_GMM_resampled.RData")
 
 # Apply Bimodality coefficient --------------------------# 
 test_BC <- function(i, benchmark){
@@ -172,7 +172,7 @@ BC_df <- left_join(BC_df, resampled_results, by="i") %>%
          method = "BC") %>%
   select(i, name, true_modes, multimod, modality_est, method)
 
-save(BC_df, file = "simulation_study/test_resampling/results_BC_resampled.RData")
+save(BC_df, file = "simulation_study/test_resampling/results/results_BC_resampled.RData")
 
 
 # Apply DensMM method (Haslbeck et al)--------------------------#
@@ -200,7 +200,7 @@ DensMM_df <- left_join(DensMM_df, resampled_results, by="i") %>%
   select(i, name, true_modes, multimod, modality_est, method)
 
 
-save(DensMM_df, file = "simulation_study/test_resampling/results_DensMM_resampled.RData")
+save(DensMM_df, file = "simulation_study/test_resampling/results/results_DensMM_resampled.RData")
 
 
 # Apply DFU -------------------------------------------------#
@@ -227,7 +227,7 @@ DFU_df <- left_join(DFU_df, resampled_results, by="i") %>%
          method = "DFU") %>%
   select(i, name, true_modes, multimod, modality_est, method)
 
-save(DFU_df, file = "simulation_study/test_resampling/results_DFU_resampled.RData")
+save(DFU_df, file = "simulation_study/test_resampling/results/results_DFU_resampled.RData")
 
 
 # Apply Remode-----------------------------------------------------------------#
@@ -257,4 +257,4 @@ Remode_df <- left_join(Remode_df, resampled_results, by="i") %>%
          method = "Remode") %>%
   select(i, name, true_modes, multimod, modality_est, method)
 
-save(Remode_df, file = "simulation_study/test_resampling/results_Remode_resampled.RData")
+save(Remode_df, file = "simulation_study/test_resampling/results/results_Remode_resampled.RData")

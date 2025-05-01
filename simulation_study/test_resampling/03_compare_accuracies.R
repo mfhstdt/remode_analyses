@@ -4,14 +4,9 @@
 library(dplyr)
 
 
-# load all results from script 2
-#TODO: fix code
-
-
 # accuracy of resampled runs -------------------------------------------------------
-
-#rdata_files <- list.files(path = "simulation_study/test_resampling", pattern = "\\.RData$", full.names = TRUE)
-#for (file in rdata_files) {load(file)}
+rdata_files <- list.files(path = "simulation_study/test_resampling/results", pattern = "\\.RData$", full.names = TRUE)
+for (file in rdata_files) {load(file)}
 
 
 remove_it <- function(s) {
