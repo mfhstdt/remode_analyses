@@ -271,4 +271,4 @@ Remode_df <- left_join(Remode_df, overview_benchmark, by="i") %>%
 save(Remode_df, file = "simulation_study/results/results_Remode.RData")
 
 
-# For accuracy analysis of results, see Script 2: simulation_study/analyse_accuracies.R
+# For accuracy analysis of results, see Script 2: simulation_study/02_analyse_accuracies.R
