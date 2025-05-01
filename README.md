@@ -3,7 +3,8 @@
 This repository contains all code required to replicate the analyses of the paper "ReMoDe - Recursive mode detection in distributions of ordinal data"
 
 ### Replication of the simulation study
-The `simulation_study` folder contains analysis scripts to apply modality detection methods to a benchmark collection of 172 distributions (see script `apply_methods.R`) and to analyze accuracies per method in discriminating uni- from multimodality and in detecting the true number of modes (see script `analyse_accuracies.R`). The benchmark distributions are stored as an RData file. Code to replicate these distributions can be found at https://github.com/mfhstdt/benchmark_ordinal_distributions. 
+The `simulation_study` folder contains analysis scripts to apply modality detection methods to a benchmark collection of 172 distributions (see script `01_apply_methods.R`) and to analyze accuracies per method in discriminating uni- from multimodality and in detecting the true number of modes (see script `02_analyse_accuracies.R`). The benchmark distributions are stored as an RData file. Code to replicate these distributions can be found at https://github.com/mfhstdt/benchmark_ordinal_distributions. 
+This folder furthermode contains a subfolder containing scripts to replicate or test of the effect of resampling reeatedly from the benchmark on our results. 
 
 ### Replication of testing different alpha correction methods 
 Remode is repeatedly applied to each benchmark distribution, each time implementing a different alpha correction method. All code to replicate this simulation can be found in the `check_alpha_correction` folder. 
